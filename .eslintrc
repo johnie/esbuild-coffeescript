@@ -1,0 +1,12 @@
+{
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {},
+  "settings": {
+    "import/extensions": [".js", ".coffee", ".litcoffee"]
+  },
+  "env": {
+    "browser": true,
+    "jest": true
+  }
+}
