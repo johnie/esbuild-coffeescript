@@ -53,4 +53,4 @@ The following options are available:
 
 ### But CoffeeScript is dead?
 
-Yes and no. Even if the last stable release of CoffeeScript were on January 2020, it still has over a million weekly downloads from NPM. CoffeeScript is also great for quick ideations and experiments.
+While it might seem like it, coffeescript is still downloaded over 1.6 million times every week. Coffeescript is still actively used and widespread, and this plugin provides a great way for these projects to leverage the great esbuild tooling.
