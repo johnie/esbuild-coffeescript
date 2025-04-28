@@ -18,7 +18,7 @@
     "license": "MIT",
     "dependencies": {
         "coffeescript": "^2.7.0",
-        "esbuild": "^0.20.1"
+        "esbuild": "^0.25.3"
     },
     "devDependencies": {
         "esbuild-jest": "^0.5.0",
