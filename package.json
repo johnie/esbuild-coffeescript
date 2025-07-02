@@ -1,6 +1,6 @@
 {
     "name": "esbuild-coffeescript",
-    "version": "2.2.0",
+    "version": "3.0.0",
     "description": "Bundle CoffeeScript with Esbuild",
     "type": "module",
     "main": "dist/index.js",
