@@ -1,3 +1,6 @@
+> [!WARNING]
+> This project is no longer maintained. We recommend switching to [Civet](https://civet.dev) for a modern alternative to CoffeeScript.
+ 
 # esbuild-coffeescript
 
 [![esbuild-coffeescript](https://github.com/johnie/esbuild-coffeescript/actions/workflows/master.yml/badge.svg?branch=master)](https://github.com/johnie/esbuild-coffeescript/actions/workflows/master.yml)
