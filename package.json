@@ -9,7 +9,9 @@
         "build": "tsc",
         "test": "vitest run",
         "test:watch": "vitest",
-        "test:coverage": "vitest run --coverage"
+        "test:coverage": "vitest run --coverage",
+        "format": "biome format --write",
+        "lint": "biome check --write"
     },
     "keywords": [
         "esbuild",
