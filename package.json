@@ -2,10 +2,16 @@
     "name": "esbuild-coffeescript",
     "version": "2.2.0",
     "description": "Bundle CoffeeScript with Esbuild",
-    "main": "index.js",
-    "types": "index.d.ts",
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
-        "test": "jest"
+        "build": "tsc",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage",
+        "format": "biome format --write",
+        "lint": "biome check --write"
     },
     "keywords": [
         "esbuild",
@@ -18,14 +24,16 @@
     "license": "MIT",
     "dependencies": {
         "coffeescript": "^2.7.0",
-        "esbuild": "^0.20.1"
+        "esbuild": "^0.25.5"
     },
     "devDependencies": {
+        "@biomejs/biome": "2.0.6",
+        "@types/coffeescript": "2.5.7",
+        "@types/node": "24.0.10",
+        "@vitest/coverage-v8": "3.2.4",
         "esbuild-jest": "^0.5.0",
-        "eslint": "^8.34.0",
-        "eslint-config-airbnb": "^19.0.4",
-        "eslint-config-prettier": "^9.1.0",
-        "jest": "^29.4.2"
+        "typescript": "5.8.3",
+        "vitest": "^3.2.4"
     },
     "prettier": {
         "singleQuote": true
