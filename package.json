@@ -5,6 +5,9 @@
     "type": "module",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "build": "tsc",
         "test": "vitest run",
@@ -21,9 +24,15 @@
         "litcoffee"
     ],
     "author": "Johnie Hjelm <johnie@hjelm.im>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/johnie/esbuild-coffeescript.git"
+    },
     "license": "MIT",
     "dependencies": {
-        "coffeescript": "^2.7.0",
+        "coffeescript": "^2.7.0"
+    },
+    "peerDependencies": {
         "esbuild": "^0.25.5"
     },
     "devDependencies": {
