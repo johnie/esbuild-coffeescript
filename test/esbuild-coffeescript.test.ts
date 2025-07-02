@@ -18,7 +18,7 @@ test('expects importing CoffeeScript to work', async () => {
 
   expect(result.outputFiles).toHaveLength(1);
   expect(
-    String.fromCodePoint(...result.outputFiles[0].contents).replace(/\n/g, '')
+    String.fromCodePoint(...result.outputFiles[0].contents).replace(/\n/g, ''),
   ).toContain(coffee.replace(/\n/g, ''));
 });
 
@@ -32,7 +32,7 @@ test('compiles .litcoffee', async () => {
   });
 
   expect(String.fromCodePoint(...result.outputFiles[0].contents)).toContain(
-    'console.log(`the answer is ${answer}`);'
+    'console.log(`the answer is ${answer}`);',
   );
 });
 
@@ -48,7 +48,7 @@ test('works with requires when used with commonjs plugin', async () => {
   });
 
   expect(String.fromCodePoint(...result.outputFiles[0].contents)).toContain(
-    'A2 = class A'
+    'A2 = class A',
   );
 });
 
