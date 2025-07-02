@@ -26,13 +26,13 @@ interface CoffeeScriptError extends Error {
 
 const omit = <T extends object, K extends keyof T>(
   obj: T,
-  keys: K[]
+  keys: K[],
 ): Omit<T, K> =>
   (Object.keys(obj) as K[])
     .filter((key) => !keys.includes(key))
     .reduce(
       (res, key) => Object.assign(res, { [key]: obj[key] }),
-      {} as Omit<T, K>
+      {} as Omit<T, K>,
     );
 
 const convertMessage = (e: CoffeeScriptError): PartialMessage => {
@@ -68,7 +68,7 @@ const coffeeScriptPlugin = (options: Options = {}): Plugin => ({
             errors: [convertMessage(e as CoffeeScriptError)],
           };
         }
-      }
+      },
     );
   },
 });
