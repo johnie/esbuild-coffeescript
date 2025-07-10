@@ -38,7 +38,7 @@
     "devDependencies": {
         "@biomejs/biome": "2.0.6",
         "@types/coffeescript": "2.5.7",
-        "@types/node": "24.0.10",
+        "@types/node": "24.0.12",
         "@vitest/coverage-v8": "3.2.4",
         "esbuild-jest": "^0.5.0",
         "typescript": "5.8.3",
