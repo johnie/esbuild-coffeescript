@@ -16,6 +16,8 @@
     ],
     "scripts": {
         "build": "tsc",
+        "ci": "$npm_execpath run lint && $npm_execpath run test && $npm_execpath run build",
+        "prepublishOnly": "$npm_execpath run ci",
         "test": "vitest run",
         "test:watch": "vitest",
         "test:coverage": "vitest run --coverage",
