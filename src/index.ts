@@ -1,7 +1,7 @@
-import { readFile } from 'fs/promises';
-import * as path from 'path';
+import { readFile } from 'node:fs/promises';
+import * as path from 'node:path';
 import * as coffeescript from 'coffeescript';
-import type { Plugin, OnLoadArgs, OnLoadResult, PartialMessage } from 'esbuild';
+import type { OnLoadArgs, OnLoadResult, PartialMessage, Plugin } from 'esbuild';
 
 interface Options {
   inlineMap?: boolean;
@@ -27,13 +27,11 @@ interface CoffeeScriptError extends Error {
 const omit = <T extends object, K extends keyof T>(
   obj: T,
   keys: K[],
-): Omit<T, K> =>
-  (Object.keys(obj) as K[])
-    .filter((key) => !keys.includes(key))
-    .reduce(
-      (res, key) => Object.assign(res, { [key]: obj[key] }),
-      {} as Omit<T, K>,
-    );
+): Omit<T, K> => {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([key]) => !keys.includes(key as K)),
+  ) as Omit<T, K>;
+};
 
 const convertMessage = (e: CoffeeScriptError): PartialMessage => {
   const location = {
