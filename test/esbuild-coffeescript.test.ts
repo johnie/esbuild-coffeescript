@@ -1,10 +1,10 @@
-import { readFile } from 'fs/promises';
+import { readFile } from 'node:fs/promises';
 import coffeescript from 'coffeescript';
-import { test, expect } from 'vitest';
 import esbuild from 'esbuild';
+import { expect, test } from 'vitest';
 import coffeeScriptPlugin from '../src/index';
 
-const readCoffeeFile = async (path) => await readFile(path, 'utf8');
+const readCoffeeFile = async (path: string) => await readFile(path, 'utf8');
 
 test('expects importing CoffeeScript to work', async () => {
   const result = await esbuild.build({
@@ -32,6 +32,7 @@ test('compiles .litcoffee', async () => {
   });
 
   expect(String.fromCodePoint(...result.outputFiles[0].contents)).toContain(
+    // biome-ignore lint/suspicious/noTemplateCurlyInString: Testing string
     'console.log(`the answer is ${answer}`);',
   );
 });
