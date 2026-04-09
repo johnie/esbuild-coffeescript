@@ -3,14 +3,14 @@ import { relative } from 'node:path';
 import { compile } from 'coffeescript';
 import type { OnLoadArgs, OnLoadResult, PartialMessage, Plugin } from 'esbuild';
 
-interface Options {
+export interface Options {
   ast?: boolean;
   bare?: boolean;
   filename?: string;
   header?: boolean;
   inlineMap?: boolean;
   literate?: boolean;
-  transpile?: object;
+  transpile?: Record<string, unknown>;
 }
 
 interface CoffeeScriptError extends Error {
@@ -24,22 +24,13 @@ interface CoffeeScriptError extends Error {
   };
 }
 
-const omit = <T extends object, K extends keyof T>(
-  obj: T,
-  keys: K[]
-): Omit<T, K> => {
-  return Object.fromEntries(
-    Object.entries(obj).filter(([key]) => !keys.includes(key as K))
-  ) as Omit<T, K>;
-};
-
 const convertMessage = (e: CoffeeScriptError): PartialMessage => {
   const location = {
     file: e.filename,
     line: e.location.first_line,
     column: e.location.first_column,
     length: e.location.last_column - e.location.first_column,
-    lineText: e.code,
+    lineText: e.code?.split('\n')[e.location.first_line],
   };
   return { text: e.message, location };
 };
@@ -54,19 +45,26 @@ const coffeeScriptPlugin = (options: Options = {}): Plugin => ({
       async (args: OnLoadArgs): Promise<OnLoadResult> => {
         const source = await readFile(args.path, 'utf8');
         const filename = relative(process.cwd(), args.path);
-        const opt = omit(options, ['inlineMap']);
+        const literate = options.literate ?? args.path.endsWith('.litcoffee');
 
         try {
-          const contents = compile(source, {
-            filename,
-            ...opt,
-            sourceMap: options.inlineMap,
-          });
+          const contents = compile(
+            source,
+            // @types/coffeescript is incomplete: missing `literate`
+            {
+              filename,
+              ...options,
+              literate,
+            } as Parameters<typeof compile>[1]
+          );
           return { contents };
         } catch (e) {
-          return {
-            errors: [convertMessage(e as CoffeeScriptError)],
-          };
+          if (e instanceof Error && 'location' in e) {
+            return {
+              errors: [convertMessage(e as CoffeeScriptError)],
+            };
+          }
+          throw e;
         }
       }
     );
