@@ -1,37 +1,28 @@
 import { readFile } from 'node:fs/promises';
-import * as path from 'node:path';
-import * as coffeescript from 'coffeescript';
+import { relative } from 'node:path';
+import { compile } from 'coffeescript';
 import type { OnLoadArgs, OnLoadResult, PartialMessage, Plugin } from 'esbuild';
 
-interface Options {
-  inlineMap?: boolean;
-  filename?: string;
-  bare?: boolean;
-  header?: boolean;
-  transpile?: object;
+export interface Options {
   ast?: boolean;
+  bare?: boolean;
+  filename?: string;
+  header?: boolean;
+  inlineMap?: boolean;
   literate?: boolean;
+  transpile?: Record<string, unknown>;
 }
 
 interface CoffeeScriptError extends Error {
+  code?: string;
+  filename?: string;
   location: {
     first_line: number;
     first_column: number;
     last_line: number;
     last_column: number;
   };
-  code?: string;
-  filename?: string;
 }
-
-const omit = <T extends object, K extends keyof T>(
-  obj: T,
-  keys: K[],
-): Omit<T, K> => {
-  return Object.fromEntries(
-    Object.entries(obj).filter(([key]) => !keys.includes(key as K)),
-  ) as Omit<T, K>;
-};
 
 const convertMessage = (e: CoffeeScriptError): PartialMessage => {
   const location = {
@@ -39,34 +30,43 @@ const convertMessage = (e: CoffeeScriptError): PartialMessage => {
     line: e.location.first_line,
     column: e.location.first_column,
     length: e.location.last_column - e.location.first_column,
-    lineText: e.code,
+    lineText: e.code?.split('\n')[e.location.first_line],
   };
   return { text: e.message, location };
 };
+
+const COFFEE_FILTER = /\.(coffee|litcoffee)$/;
 
 const coffeeScriptPlugin = (options: Options = {}): Plugin => ({
   name: 'coffeescript',
   setup(build) {
     build.onLoad(
-      { filter: /\.(coffee|litcoffee)$/ },
+      { filter: COFFEE_FILTER },
       async (args: OnLoadArgs): Promise<OnLoadResult> => {
         const source = await readFile(args.path, 'utf8');
-        const filename = path.relative(process.cwd(), args.path);
-        const opt = omit(options, ['inlineMap']);
+        const filename = relative(process.cwd(), args.path);
+        const literate = options.literate ?? args.path.endsWith('.litcoffee');
 
         try {
-          const contents = coffeescript.compile(source, {
-            filename,
-            ...opt,
-            sourceMap: options.inlineMap,
-          });
+          const contents = compile(
+            source,
+            // @types/coffeescript is incomplete: missing `literate`
+            {
+              filename,
+              ...options,
+              literate,
+            } as Parameters<typeof compile>[1]
+          );
           return { contents };
         } catch (e) {
-          return {
-            errors: [convertMessage(e as CoffeeScriptError)],
-          };
+          if (e instanceof Error && 'location' in e) {
+            return {
+              errors: [convertMessage(e as CoffeeScriptError)],
+            };
+          }
+          throw e;
         }
-      },
+      }
     );
   },
 });
