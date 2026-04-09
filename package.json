@@ -39,6 +39,7 @@
         "url": "https://github.com/johnie/esbuild-coffeescript.git"
     },
     "license": "MIT",
+    "packageManager": "pnpm@10.29.3",
     "dependencies": {
         "coffeescript": "^2.7.0"
     },
