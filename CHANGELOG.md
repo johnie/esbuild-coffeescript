@@ -1,5 +1,35 @@
 # Changelog
 
+## 3.1.0
+
+### Minor Changes
+
+- [#39](https://github.com/johnie/esbuild-coffeescript/pull/39) [`e6f9c65`](https://github.com/johnie/esbuild-coffeescript/commit/e6f9c65112f0bb061f4c0da4991bdc1e5a444fdf) Thanks [@johnie](https://github.com/johnie)! - ### Auto-detect literate CoffeeScript from file extension
+
+  `.litcoffee` files are now compiled automatically without needing to pass `literate: true`. The option is still respected when explicitly set.
+
+  ### Fix `inlineMap` option
+
+  The `inlineMap` option was incorrectly remapped to CoffeeScript's `sourceMap` option, which returns an object instead of a string and breaks esbuild. It now correctly passes `inlineMap` through to the CoffeeScript compiler, producing an inline base64-encoded source map comment in the output.
+
+  ### Fix error `lineText` for multi-line files
+
+  Error messages now correctly report the specific line where the error occurred, instead of passing the entire source file as `lineText`.
+
+  ### Safer error handling
+
+  The catch clause now validates that the error has CoffeeScript's `location` property before attempting to convert it. Unexpected errors are re-thrown instead of being silently swallowed.
+
+  ### Export `Options` type
+
+  The `Options` interface is now exported, allowing consumers to type-check their plugin configuration.
+
+### Patch Changes
+
+- [#36](https://github.com/johnie/esbuild-coffeescript/pull/36) [`8522362`](https://github.com/johnie/esbuild-coffeescript/commit/852236270d9237a370be03c9c9cad94780b4ebad) Thanks [@johnie](https://github.com/johnie)! - docs: update README with enhanced installation instructions
+
+- [#37](https://github.com/johnie/esbuild-coffeescript/pull/37) [`30652d8`](https://github.com/johnie/esbuild-coffeescript/commit/30652d80584db5e14c26b28c0670e0db31adbabd) Thanks [@mattmenefee](https://github.com/mattmenefee)! - Widen esbuild peer dependency from ^0.25.9 to >=0.25.9
+
 ## v2.2.0
 
 - Updated dependencies
