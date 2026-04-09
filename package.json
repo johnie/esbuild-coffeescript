@@ -41,7 +41,7 @@
         "coffeescript": "^2.7.0"
     },
     "peerDependencies": {
-        "esbuild": "^0.25.9"
+        "esbuild": ">=0.25.9"
     },
     "devDependencies": {
         "@biomejs/biome": "2.2.2",
