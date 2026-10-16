@@ -86,4 +86,4 @@ return { text: e.message, location: { line: e.location.first_line } };
 
 **Ask first:** adding or upgrading a runtime `dependency` (it ships to every user), changing the `esbuild` peer range, changing CI workflows or the release setup, removing or renaming anything exported from `src/index.ts`.
 
-**Never:** suppress lint errors (`oxlint-disable`, `@ts-ignore`, `@ts-expect-error`, unjustified `as` casts) to get `pnpm check` passing. Delete or weaken a failing test to make the suite pass. Edit `CHANGELOG.md` or `dist/`. Commit secrets, or the `NPM_TOKEN`/`GH_TOKEN` values. Force-push `master`.
+**Never:** suppress lint errors (`oxlint-disable`, `@ts-ignore`, `@ts-expect-error`, unjustified `as` casts) to get `pnpm check` passing. Delete or weaken a failing test to make the suite pass. Edit `CHANGELOG.md` or `dist/`. Commit secrets, or the `NPM_TOKEN` value. Force-push `master`.
