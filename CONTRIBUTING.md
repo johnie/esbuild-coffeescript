@@ -37,7 +37,7 @@ git checkout -b feature/my-change
 
 ### Code Quality
 
-This project uses [Ultracite](https://github.com/haydenbleasel/ultracite) (powered by Biome) for formatting and linting. A pre-commit hook runs automatically to format staged files.
+This project uses [Ultracite](https://github.com/haydenbleasel/ultracite) (powered by oxlint and oxfmt) for formatting and linting. A pre-commit hook runs automatically to format staged files.
 
 To manually check or fix issues:
 
@@ -64,11 +64,12 @@ pnpm test:watch
 pnpm test:coverage
 ```
 
-### Building
+### Type Checking and Building
 
-The project compiles TypeScript to JavaScript:
+`tsconfig.json` type-checks `src` and `test` without emitting; `tsconfig.build.json` emits `dist` from `src`:
 
 ```bash
+pnpm typecheck
 pnpm build
 ```
 
@@ -80,7 +81,7 @@ Before pushing, run the same checks that CI runs:
 pnpm run ci
 ```
 
-This runs lint checks, tests, and the build in sequence.
+This runs lint checks, type checks, tests, and the build in sequence.
 
 ## Submitting a Pull Request
 

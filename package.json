@@ -1,61 +1,65 @@
 {
-    "name": "esbuild-coffeescript",
-    "version": "3.1.0",
-    "description": "Bundle CoffeeScript with Esbuild",
-    "type": "module",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.js"
-        }
-    },
-    "files": [
-        "dist"
-    ],
-    "scripts": {
-        "build": "tsc",
-        "ci": "$npm_execpath run check && $npm_execpath run test && $npm_execpath run build",
-        "prepublishOnly": "$npm_execpath run ci",
-        "test": "vitest run",
-        "test:watch": "vitest",
-        "test:coverage": "vitest run --coverage",
-        "check": "ultracite check",
-        "fix": "ultracite fix",
-        "release": "$npm_execpath run ci && changeset publish",
-        "prepare": "lefthook install"
-    },
-    "keywords": [
-        "esbuild",
-        "esbuild-coffeescript",
-        "esbuild-plugin",
-        "coffeescript",
-        "litcoffee"
-    ],
-    "author": "Johnie Hjelm <johnie@hjelm.im>",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/johnie/esbuild-coffeescript.git"
-    },
-    "license": "MIT",
-    "packageManager": "pnpm@10.29.3",
-    "dependencies": {
-        "coffeescript": "^2.7.0"
-    },
-    "peerDependencies": {
-        "esbuild": ">=0.25.9"
-    },
-    "devDependencies": {
-        "@biomejs/biome": "2.4.10",
-        "@changesets/changelog-github": "^0.6.0",
-        "@changesets/cli": "^2.30.0",
-        "@types/coffeescript": "2.5.7",
-        "@types/node": "25.5.2",
-        "@vitest/coverage-v8": "4.1.4",
-        "lefthook": "^2.1.5",
-        "typescript": "6.0.2",
-        "ultracite": "7.4.4",
-        "vitest": "^4.1.4"
+  "name": "esbuild-coffeescript",
+  "version": "3.1.0",
+  "description": "Bundle CoffeeScript with Esbuild",
+  "keywords": [
+    "coffeescript",
+    "esbuild",
+    "esbuild-coffeescript",
+    "esbuild-plugin",
+    "litcoffee"
+  ],
+  "license": "MIT",
+  "author": "Johnie Hjelm <johnie@hjelm.im>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johnie/esbuild-coffeescript.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc",
+    "ci": "$npm_execpath run check && $npm_execpath run typecheck && $npm_execpath run test && $npm_execpath run build",
+    "prepublishOnly": "$npm_execpath run ci",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "check": "ultracite check",
+    "fix": "ultracite fix",
+    "release": "$npm_execpath run ci && changeset publish",
+    "prepare": "lefthook install"
+  },
+  "dependencies": {
+    "@types/coffeescript": "^2.5.7",
+    "coffeescript": "^2.7.0"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.3",
+    "@types/node": "26.6.5",
+    "@vitest/coverage-v8": "5.0.5",
+    "esbuild": "^0.28.2",
+    "lefthook": "^2.2.2",
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.88.0",
+    "oxlint-tsgolint": "^7.0.2004",
+    "typescript": "7.0.2",
+    "ultracite": "8.0.1",
+    "vitest": "^5.0.5"
+  },
+  "peerDependencies": {
+    "esbuild": ">=0.25.9"
+  },
+  "packageManager": "pnpm@12.14.0"
 }
